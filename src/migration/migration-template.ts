@@ -1,5 +1,5 @@
 import { DataType } from 'sequelize-typescript';
-import { Migration } from '../config/migration.config';
+import { Migration } from '@config/migration.config';
 
 export const databasePath = __dirname;
 

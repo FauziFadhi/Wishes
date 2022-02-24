@@ -1,6 +1,6 @@
-import { config } from 'dotenv';
-import { join } from 'path';
-import { Sequelize } from 'sequelize-typescript';
+import { config } from "dotenv";
+import { join } from "path";
+import { Sequelize } from "sequelize-typescript";
 
 config();
 
@@ -13,9 +13,9 @@ const {
   ENV,
 } = process.env || {};
 const db = new Sequelize({
-  dialect: 'postgres',
+  dialect: "postgres",
   database: DB_NAME,
-  ...(ENV === 'production' && {
+  ...(ENV === "production" && {
     dialectOptions: {
       ssl: {
         require: true,
@@ -24,7 +24,7 @@ const db = new Sequelize({
     },
   }),
   logging: (log: any): void => {
-    console.log('\x1b[33m', log, '\x1b[0m', '\n');
+    console.log("\x1b[33m", log, "\x1b[0m", "\n");
   },
   port: +DB_PORT,
   username: DB_USER,
@@ -33,7 +33,7 @@ const db = new Sequelize({
   define: {
     underscored: true,
   },
-  models: [join(__dirname, '../models/core')],
+  models: [join(__dirname, "../models/core")],
 });
 
 export default db;

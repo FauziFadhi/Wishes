@@ -1,5 +1,5 @@
-import { Response } from 'express'
-export const AllException = (err: any, req: any, res: Response, next: any) => {
+import { Response } from 'express';
+export default function (err: any, req: any, res: Response, next: any) {
   console.log('\x1b[36m', err.stack, '\x1b[0m');
 
   const statusCode = err.statusCode || 500;
