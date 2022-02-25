@@ -16,7 +16,7 @@ export class UserController implements ControllerBase {
     this.router = Router();
   }
   routes() {
-    this.router.get('/', AuthGuard, async (req: Request, res: Response) => {
+    this.router.get('/', async (req: Request, res: Response) => {
       res.send(await this.getUsers(req));
     });
 
