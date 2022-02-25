@@ -23,7 +23,12 @@ export class UserService {
       rejectOnEmpty: new HttpException('Selected Timezone not valid.', 400),
     });
 
-    return await User.create(dto);
+    return await User.create(dto).catch((e) => {
+      if (e.name == 'SequelizeUniqueConstraintError') {
+        throw new HttpException('Duplicate name', 400);
+      }
+      throw e;
+    });
   }
 
   /**
@@ -52,7 +57,7 @@ export class UserService {
       }),
 
       /** check timezone */
-      await Timezone.findOne({
+      Timezone.findOne({
         where: {
           name: dto.timezone,
         },

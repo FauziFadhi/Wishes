@@ -5,8 +5,9 @@ import { autoInjectable } from 'tsyringe';
 import { ControllerBase } from './interface/controller.base';
 import { UserVm } from './viewmodel/user.viewmodel';
 import validation from '@utils/middleware/validation.middleware';
-import { UserCreateRequest } from './request/user.request';
-import HttpException from '@utils/http-exception';
+import AuthGuard from '@utils/middleware/auth.middleware';
+import UserGuard from '@utils/middleware/auth-access.middleware';
+import { UserCreateRequest, UserUpdateRequest } from './request/user.request';
 
 @autoInjectable()
 export class UserController implements ControllerBase {
@@ -15,9 +16,10 @@ export class UserController implements ControllerBase {
     this.router = Router();
   }
   routes() {
-    this.router.get('/', async (req: Request, res: Response) => {
+    this.router.get('/', AuthGuard, async (req: Request, res: Response) => {
       res.send(await this.getUsers(req));
     });
+
     this.router.post(
       '/',
       validation(UserCreateRequest),
@@ -25,12 +27,19 @@ export class UserController implements ControllerBase {
         res.send(await this.createUser(req));
       },
     );
+
     this.router.delete('/:id', async (req: Request, res: Response) => {
       res.send(await this.deleteUser(req));
     });
-    this.router.put('/:id', async (req: Request, res: Response) => {
-      res.send(await this.updateUser(req));
-    });
+
+    this.router.put(
+      '/:id',
+      [AuthGuard, UserGuard, validation(UserUpdateRequest)],
+      async (req: Request, res: Response) => {
+        res.send(await this.updateUser(req));
+      },
+    );
+
     return this.router;
   }
 
