@@ -69,10 +69,10 @@ export class UserService {
     return user.update(dto);
   }
 
-  async getUsers(options?: { page?: number; offset?: number }) {
+  async getUsers(options?: { size?: number; offset?: number }) {
     return User.findAll({
-      limit: 10,
-      offset: 0,
+      limit: options?.size || 10,
+      offset: options?.offset || 0,
     });
   }
 }

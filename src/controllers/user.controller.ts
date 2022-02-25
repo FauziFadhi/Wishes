@@ -43,8 +43,11 @@ export class UserController implements ControllerBase {
     return this.router;
   }
 
-  async getUsers(req: Request) {
-    const resp = await this.service.getUsers();
+  async getUsers({ query }: Request) {
+    const size = query.size ? +query.size : 10;
+    const page = query.page ? +query.page : 1;
+    const offset = (page - 1) * size || 0;
+    const resp = await this.service.getUsers({ offset, size });
     return transformer(UserVm, resp);
   }
 
