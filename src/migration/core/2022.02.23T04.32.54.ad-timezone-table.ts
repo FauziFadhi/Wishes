@@ -6,11 +6,6 @@ export const databasePath = __dirname;
 export const up: Migration = async ({ context: queryInterface }) => {
   await queryInterface.sequelize.transaction(async () => {
     await queryInterface.createTable('timezones', {
-      id: {
-        type: DataType.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
       name: {
         type: DataType.STRING,
         allowNull: false,
@@ -22,7 +17,6 @@ export const up: Migration = async ({ context: queryInterface }) => {
 
     queryInterface.addIndex('timezones', ['name'], {
       unique: true,
-      where: { deleted_at: null },
     });
   });
 };
@@ -30,7 +24,6 @@ export const down: Migration = async ({ context: queryInterface }) => {
   await queryInterface.sequelize.transaction(async () => {
     queryInterface.removeIndex('timezones', ['name'], {
       unique: true,
-      where: { deleted_at: null },
     });
     await queryInterface.dropTable('timezones');
   });

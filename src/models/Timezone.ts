@@ -1,4 +1,11 @@
-import { Column, Model, Table } from 'sequelize-typescript';
+import {
+  Column,
+  HasMany,
+  Model,
+  PrimaryKey,
+  Table,
+} from 'sequelize-typescript';
+import User from './User';
 
 interface IModelOptional {
   id: number;
@@ -26,6 +33,10 @@ export default class Timezone
   extends Model<IModel, ICreateModel>
   implements IModel
 {
+  @PrimaryKey
   @Column
   name!: string;
+
+  @HasMany(() => User, 'timezone')
+  user?: User;
 }

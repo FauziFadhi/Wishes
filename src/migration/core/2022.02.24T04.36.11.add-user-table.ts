@@ -25,6 +25,10 @@ export const up: Migration = async ({ context: queryInterface }) => {
       },
       timezone: {
         type: DataType.STRING,
+        references: {
+          key: 'name',
+          model: 'timezones',
+        },
         allowNull: false,
       },
       created_at: DataType.DATE,
@@ -32,8 +36,8 @@ export const up: Migration = async ({ context: queryInterface }) => {
       deleted_at: DataType.DATE,
     });
 
-    queryInterface.addIndex('users', ['time_zone', 'birth_date']);
-    queryInterface.addIndex('users', ['first_name', 'last_name'], {
+    await queryInterface.addIndex('users', ['timezone', 'birth_date']);
+    await queryInterface.addIndex('users', ['first_name', 'last_name'], {
       unique: true,
       where: { deleted_at: null },
     });
@@ -41,7 +45,7 @@ export const up: Migration = async ({ context: queryInterface }) => {
 };
 export const down: Migration = async ({ context: queryInterface }) => {
   await queryInterface.sequelize.transaction(async () => {
-    queryInterface.removeIndex('users', ['time_zone', 'birth_date']);
+    queryInterface.removeIndex('users', ['timezone', 'birth_date']);
     queryInterface.removeIndex('users', ['first_name', 'last_name'], {
       unique: true,
       where: { deleted_at: null },
