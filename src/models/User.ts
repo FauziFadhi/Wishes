@@ -1,4 +1,5 @@
-import { Column, Model, Table } from 'sequelize-typescript';
+import { Column, ForeignKey, Model, Table } from 'sequelize-typescript';
+import Timezone from './Timezone';
 
 interface IModelOptional {
   id: number;
@@ -39,11 +40,12 @@ export default class User
   firstName!: string;
 
   @Column
-  lastName?: string | undefined;
+  lastName?: string;
 
   @Column
-  birthDate!: string | Date;
+  birthDate!: string;
 
+  @ForeignKey(() => Timezone)
   @Column
   timezone!: string;
 }
