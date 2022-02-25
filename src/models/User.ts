@@ -39,11 +39,11 @@ export default class User
   firstName!: string;
 
   @Column
+  lastName?: string | undefined;
+
+  @Column
   birthDate!: string | Date;
 
   @Column
   timezone!: string;
-
-  @Column
-  lastName?: string | undefined;
 }
