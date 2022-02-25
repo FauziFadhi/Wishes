@@ -1,5 +1,6 @@
-import { Column, ForeignKey, Model, Table } from 'sequelize-typescript';
+import { Column, ForeignKey, HasOne, Model, Table } from 'sequelize-typescript';
 import Timezone from './Timezone';
+import Wish from './Wish';
 
 interface IModelOptional {
   id: number;
@@ -48,4 +49,7 @@ export default class User
   @ForeignKey(() => Timezone)
   @Column
   timezone!: string;
+
+  @HasOne(() => Wish)
+  wish?: Wish;
 }
