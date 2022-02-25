@@ -14,3 +14,6 @@
 - the basic token from username: `user1` password: `password1` if you want to change user data with id 1.
 just change the number with user id from list.
 - example if you want to update data for user with id 2, then the username: `user2` and the password: `password2`
+
+# Postman Collection
+`https://documenter.getpostman.com/view/4219273/UVkpQGPq`
